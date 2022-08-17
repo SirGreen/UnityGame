@@ -30,7 +30,11 @@
         {
             this.UPic = new System.Windows.Forms.GroupBox();
             this.MoveOp = new System.Windows.Forms.GroupBox();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.MoveMap = new System.Windows.Forms.GroupBox();
+            this.MoveMapfP = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.fPButton = new System.Windows.Forms.FlowLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
@@ -38,6 +42,9 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.MoveOp.SuspendLayout();
+            this.MoveMap.SuspendLayout();
             this.fPButton.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,6 +59,10 @@
             // 
             // MoveOp
             // 
+            this.MoveOp.Controls.Add(this.button9);
+            this.MoveOp.Controls.Add(this.button8);
+            this.MoveOp.Controls.Add(this.button7);
+            this.MoveOp.Controls.Add(this.button6);
             this.MoveOp.Location = new System.Drawing.Point(890, 12);
             this.MoveOp.Name = "MoveOp";
             this.MoveOp.Size = new System.Drawing.Size(381, 552);
@@ -59,15 +70,50 @@
             this.MoveOp.TabStop = false;
             this.MoveOp.Text = "Move Option";
             // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(6, 80);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(91, 23);
+            this.button8.TabIndex = 2;
+            this.button8.Text = "Move / Attack";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(6, 51);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(91, 23);
+            this.button7.TabIndex = 1;
+            this.button7.Text = "Attack Only";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(6, 22);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(91, 23);
+            this.button6.TabIndex = 0;
+            this.button6.Text = "Move Only";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
             // MoveMap
             // 
             this.MoveMap.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MoveMap.Controls.Add(this.MoveMapfP);
             this.MoveMap.Location = new System.Drawing.Point(32, 12);
             this.MoveMap.Name = "MoveMap";
             this.MoveMap.Size = new System.Drawing.Size(846, 438);
             this.MoveMap.TabIndex = 2;
             this.MoveMap.TabStop = false;
             this.MoveMap.Text = "MoveMap";
+            // 
+            // MoveMapfP
+            // 
+            this.MoveMapfP.Location = new System.Drawing.Point(6, 22);
+            this.MoveMapfP.Name = "MoveMapfP";
+            this.MoveMapfP.Size = new System.Drawing.Size(834, 410);
+            this.MoveMapfP.TabIndex = 0;
             // 
             // groupBox1
             // 
@@ -134,7 +180,15 @@
             this.button5.TabIndex = 4;
             this.button5.Text = "New Unit";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(6, 109);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(91, 23);
+            this.button9.TabIndex = 3;
+            this.button9.Text = "Unit";
+            this.button9.UseVisualStyleBackColor = true;
             // 
             // EditorMenu
             // 
@@ -151,7 +205,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EditorMenu";
             this.Text = "Unit Editor";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.MoveOp.ResumeLayout(false);
+            this.MoveMap.ResumeLayout(false);
             this.fPButton.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -169,5 +224,10 @@
         private Button button3;
         private Button button4;
         private Button button5;
+        private FlowLayoutPanel MoveMapfP;
+        private Button button8;
+        private Button button7;
+        private Button button6;
+        private Button button9;
     }
 }

@@ -15,11 +15,23 @@ namespace SideProject
         public EditorMenu()
         {
             InitializeComponent();
+            ElementInit();
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void ElementInit()
         {
-
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    Button btn = new()
+                    {
+                        Width = 35,
+                        Height = 35
+                    };
+                    MoveMapfP.Controls.Add(btn);
+                }
+            }
         }
     }
 }

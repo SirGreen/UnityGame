@@ -16,6 +16,28 @@ namespace SideProject
         {
             InitializeComponent();
             ElementInit();
+            UnitPiture.AllowDrop = true;
+        }
+
+        private void UnitPiture_DragDrop(object sender, DragEventArgs e)
+        {
+            var data = e.Data.GetData(DataFormats.FileDrop);
+            if (data != null)
+            {
+                var fName = data as string[];
+                if (fName.Length>0)
+                    UnitPiture.Image = Image.FromFile(fName[0]);
+            }
+        }
+
+        private void UnitPiture_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void ElementInit()
@@ -39,6 +61,10 @@ namespace SideProject
 
         private async void button3_Click(object sender, EventArgs e)
         {
+            UnitPiture.Image = null;
+            UnitNameB.Text = null;
+            UnitDescrip.Text = null;
+
             MoveMapP.Controls.Clear();
             button3.Enabled = false;
 

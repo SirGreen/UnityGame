@@ -43,7 +43,7 @@
             // 
             // UPic
             // 
-            this.UPic.Location = new System.Drawing.Point(32, 263);
+            this.UPic.Location = new System.Drawing.Point(32, 456);
             this.UPic.Name = "UPic";
             this.UPic.Size = new System.Drawing.Size(236, 175);
             this.UPic.TabIndex = 0;
@@ -52,27 +52,28 @@
             // 
             // MoveOp
             // 
-            this.MoveOp.Location = new System.Drawing.Point(516, 12);
+            this.MoveOp.Location = new System.Drawing.Point(890, 12);
             this.MoveOp.Name = "MoveOp";
-            this.MoveOp.Size = new System.Drawing.Size(272, 343);
+            this.MoveOp.Size = new System.Drawing.Size(381, 552);
             this.MoveOp.TabIndex = 1;
             this.MoveOp.TabStop = false;
             this.MoveOp.Text = "Move Option";
             // 
             // MoveMap
             // 
+            this.MoveMap.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MoveMap.Location = new System.Drawing.Point(32, 12);
             this.MoveMap.Name = "MoveMap";
-            this.MoveMap.Size = new System.Drawing.Size(478, 245);
+            this.MoveMap.Size = new System.Drawing.Size(846, 438);
             this.MoveMap.TabIndex = 2;
             this.MoveMap.TabStop = false;
             this.MoveMap.Text = "MoveMap";
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(274, 263);
+            this.groupBox1.Location = new System.Drawing.Point(274, 456);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(236, 175);
+            this.groupBox1.Size = new System.Drawing.Size(604, 175);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Unit Description";
@@ -84,9 +85,9 @@
             this.fPButton.Controls.Add(this.button3);
             this.fPButton.Controls.Add(this.button4);
             this.fPButton.Controls.Add(this.button5);
-            this.fPButton.Location = new System.Drawing.Point(516, 361);
+            this.fPButton.Location = new System.Drawing.Point(975, 570);
             this.fPButton.Name = "fPButton";
-            this.fPButton.Size = new System.Drawing.Size(272, 77);
+            this.fPButton.Size = new System.Drawing.Size(243, 61);
             this.fPButton.TabIndex = 4;
             // 
             // button1
@@ -133,12 +134,15 @@
             this.button5.TabIndex = 4;
             this.button5.Text = "New Unit";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // EditorMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.AutoScroll = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(1283, 643);
             this.Controls.Add(this.fPButton);
             this.Controls.Add(this.MoveOp);
             this.Controls.Add(this.groupBox1);
@@ -147,6 +151,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EditorMenu";
             this.Text = "Unit Editor";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.fPButton.ResumeLayout(false);
             this.ResumeLayout(false);
 

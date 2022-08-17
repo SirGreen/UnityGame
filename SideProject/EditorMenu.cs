@@ -15,6 +15,7 @@ namespace SideProject
         public EditorMenu()
         {
             InitializeComponent();
+            ElementInit();
             UnitPiture.AllowDrop = true;
         }
 
@@ -34,17 +35,9 @@ namespace SideProject
             e.Effect = DragDropEffects.Copy;
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            UnitPiture.Image = null;
-            UnitNameB.Text = null;
-            UnitDescrip.Text = null;
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
-            ElementInit();
         }
 
         private void ElementInit()
@@ -68,6 +61,10 @@ namespace SideProject
 
         private async void button3_Click(object sender, EventArgs e)
         {
+            UnitPiture.Image = null;
+            UnitNameB.Text = null;
+            UnitDescrip.Text = null;
+
             MoveMapP.Controls.Clear();
             button3.Enabled = false;
 

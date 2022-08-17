@@ -4,6 +4,9 @@
     <Compile Update="EditorMenu.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Map.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="StartMenu.cs">
       <SubType>Form</SubType>
     </Compile>

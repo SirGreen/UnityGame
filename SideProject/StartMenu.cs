@@ -5,10 +5,6 @@ namespace SideProject
         public StartMenu()
         {
             InitializeComponent(); 
-            this.Hide();
-            EditorMenu em = new EditorMenu();
-            em.ShowDialog();
-            this.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)

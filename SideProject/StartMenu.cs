@@ -14,5 +14,13 @@ namespace SideProject
             em.ShowDialog();
             this.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Map m = new Map();
+            m.ShowDialog();
+            this.Show();
+        }
     }
 }

@@ -44,6 +44,40 @@ namespace SideProject
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
+            ElementInit();
+        }
+
+        private void ElementInit()
+        {
+            for (int i = 0; i < 24; i++)
+            {
+                for (int j = 0; j < 12; j++)
+                {
+                    Button btn = new()
+                    {
+                        Width = 50,
+                        Height = 50,
+                        Location = new Point(i * 50, j * 50)
+                    };
+                    MoveMapP.Controls.Add(btn);
+                }
+            }
+        }
+
+        DateTime timespam;
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            MoveMapP.Controls.Clear();
+            button3.Enabled = false;
+
+            if ((DateTime.Now - timespam).Ticks < 5000000) return;
+            timespam = DateTime.Now;
+
+            ElementInit();
+
+            await Task.Delay(444);
+            button3.Enabled = true;
         }
     }
 }

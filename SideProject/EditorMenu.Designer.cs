@@ -29,26 +29,47 @@
         private void InitializeComponent()
         {
             this.UPic = new System.Windows.Forms.GroupBox();
+            this.UnitPiture = new System.Windows.Forms.PictureBox();
             this.MoveOp = new System.Windows.Forms.GroupBox();
             this.MoveMap = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.UnitDescrip = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.UnitNameB = new System.Windows.Forms.TextBox();
             this.fPButton = new System.Windows.Forms.FlowLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.UPic.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UnitPiture)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.fPButton.SuspendLayout();
             this.SuspendLayout();
             // 
             // UPic
             // 
+            this.UPic.Controls.Add(this.UnitPiture);
             this.UPic.Location = new System.Drawing.Point(32, 263);
             this.UPic.Name = "UPic";
             this.UPic.Size = new System.Drawing.Size(236, 175);
             this.UPic.TabIndex = 0;
             this.UPic.TabStop = false;
             this.UPic.Text = "Unit Picture";
+            // 
+            // UnitPiture
+            // 
+            this.UnitPiture.BackColor = System.Drawing.Color.LightCoral;
+            this.UnitPiture.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.UnitPiture.Location = new System.Drawing.Point(6, 22);
+            this.UnitPiture.Name = "UnitPiture";
+            this.UnitPiture.Size = new System.Drawing.Size(224, 147);
+            this.UnitPiture.TabIndex = 0;
+            this.UnitPiture.TabStop = false;
+            this.UnitPiture.DragDrop += new System.Windows.Forms.DragEventHandler(this.UnitPiture_DragDrop);
+            this.UnitPiture.DragEnter += new System.Windows.Forms.DragEventHandler(this.UnitPiture_DragEnter);
             // 
             // MoveOp
             // 
@@ -70,12 +91,51 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.UnitDescrip);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.UnitNameB);
             this.groupBox1.Location = new System.Drawing.Point(274, 263);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(236, 175);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Unit Description";
+            // 
+            // UnitDescrip
+            // 
+            this.UnitDescrip.Location = new System.Drawing.Point(6, 73);
+            this.UnitDescrip.Multiline = true;
+            this.UnitDescrip.Name = "UnitDescrip";
+            this.UnitDescrip.PlaceholderText = "Say what this unit is";
+            this.UnitDescrip.Size = new System.Drawing.Size(224, 96);
+            this.UnitDescrip.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 55);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 15);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Unit Description:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(67, 15);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Unit Name:";
+            // 
+            // UnitNameB
+            // 
+            this.UnitNameB.Location = new System.Drawing.Point(79, 22);
+            this.UnitNameB.Name = "UnitNameB";
+            this.UnitNameB.PlaceholderText = "Insert name";
+            this.UnitNameB.Size = new System.Drawing.Size(151, 23);
+            this.UnitNameB.TabIndex = 0;
             // 
             // fPButton
             // 
@@ -97,6 +157,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Exit";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -115,6 +176,7 @@
             this.button3.TabIndex = 2;
             this.button3.Text = "Reset";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -147,6 +209,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EditorMenu";
             this.Text = "Unit Editor";
+            this.UPic.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.UnitPiture)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.fPButton.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -164,5 +230,10 @@
         private Button button3;
         private Button button4;
         private Button button5;
+        private PictureBox UnitPiture;
+        private TextBox UnitDescrip;
+        private Label label2;
+        private Label label1;
+        private TextBox UnitNameB;
     }
 }

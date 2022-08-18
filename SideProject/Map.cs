@@ -48,5 +48,13 @@ namespace SideProject
 
             fPButtonMap.Location = new Point(MapBox.Width + 25, Terrain.Height + 25);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            TerrainMaker ter = new TerrainMaker();
+            this.Hide();
+            ter.ShowDialog();
+            this.Show();
+        }
     }
 }

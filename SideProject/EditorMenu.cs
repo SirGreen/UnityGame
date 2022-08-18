@@ -141,6 +141,7 @@ namespace SideProject
         {
             Button b = sender as Button;
             int x = BCx(b.Name), y = BCy(b.Name);
+            if (ux == x && uy == y) return;
             a[x, y] = mode;
             if (mode == 1 && !isPlaced)
             {

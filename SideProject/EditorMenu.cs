@@ -73,8 +73,23 @@ namespace SideProject
 
             ElementInit();
 
-            await Task.Delay(444);
+            await Task.Delay(300);
             button3.Enabled = true;
+        }
+
+        private void EditorMenu_Load(object sender, EventArgs e)
+        {
+            MoveMap.Location = new Point(0, 0);
+
+            MoveOp.Location = new Point(MoveMap.Width + 25, 0);
+            MoveOp.Height = MoveMap.Height;
+            MoveOpfP.Height = MoveMap.Height - 50;
+
+            UPic.Location = new Point(0, MoveMap.Height + 25);
+
+            groupBox1.Location = new Point(UPic.Width + 25, MoveMap.Height + 25);
+
+            fPButton.Location = new Point(MoveMap.Width + 25, MoveMap.Height + 25);
         }
     }
 }

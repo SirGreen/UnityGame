@@ -44,7 +44,7 @@ namespace SideProject
             MapDBox.Width = MapBox.Width;
 
             Terrain.Location = new Point(MapBox.Width + 25, 0);
-            Terrain.Height=MapBox.Height;
+            Terrain.Height = MapBox.Height;
 
             fPButtonMap.Location = new Point(MapBox.Width + 25, Terrain.Height + 25);
         }

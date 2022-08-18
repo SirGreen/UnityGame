@@ -117,6 +117,7 @@
             this.Controls.Add(this.MapDBox);
             this.Controls.Add(this.MapBox);
             this.Name = "Map";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Map";
             this.Load += new System.EventHandler(this.Map_Load);
             this.MapBox.ResumeLayout(false);

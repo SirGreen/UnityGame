@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace SideProject
 {
@@ -22,9 +23,12 @@ namespace SideProject
         #region Var
         DateTime timespam;
         int[,] a = new int[24, 12];
+        string[] atofile = new string[24];
         //ux - unit x cordinate
         int mode = 0, ux = -1, uy = -1;
+        int unit=0;
         bool isPlaced = false;
+        string unitName = "", unitDes = "";
         Button[,] but = new Button[24,12];
         #endregion
 
@@ -60,6 +64,13 @@ namespace SideProject
             e.Effect = DragDropEffects.Copy;
         }
 
+        private void UnitGet()
+        {
+            string s = File.ReadAllText("NumOfUnit.txt");
+
+            unit = Convert.ToInt32(s);
+        }
+
         private void ElementInit()
         {
             for (int i = 0; i < 24; i++)
@@ -80,6 +91,7 @@ namespace SideProject
                     MoveMapP.Controls.Add(but[i,j]);
                 }
             }
+            UnitGet();
         }
         #endregion
 
@@ -89,22 +101,36 @@ namespace SideProject
             this.Close();
         }
 
-        private async void button3_Click(object sender, EventArgs e)
+        private async void Reset(Button btn)
         {
             UnitPiture.Image = null;
             UnitNameB.Text = null;
             UnitDescrip.Text = null;
 
             MoveMapP.Controls.Clear();
-            button3.Enabled = false;
+            btn.Enabled = false;
 
             if ((DateTime.Now - timespam).Ticks < 5000000) return;
             timespam = DateTime.Now;
 
             ElementInit();
 
+            for (int i = 0; i < 24; i++) 
+            {
+                for (int j = 0; j < 12; j++) 
+                {
+                    a[i, j] = 0;
+                }
+                atofile[i] = "";
+            }
+
             await Task.Delay(300);
-            button3.Enabled = true;
+            btn.Enabled = true;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Reset(button3);
         }
         #endregion
 
@@ -112,10 +138,10 @@ namespace SideProject
         {
             switch (i)
             {
-                case 1: return Color.Green; break;
-                case 2: return Color.Aquamarine; break;
-                case 3: return Color.Red; break;
-                case 4: return Color.SlateGray; break;                
+                case 1: return Color.Green; 
+                case 2: return Color.Aquamarine; 
+                case 3: return Color.Red; 
+                case 4: return Color.SlateGray;               
             }
             return Color.White;
         }
@@ -193,6 +219,53 @@ namespace SideProject
         private void b1_Click(object sender, EventArgs e)
         {
             mode = 1;
+        }
+        #endregion
+
+        #region Advance Button 
+
+        ///////Unit Name//////////
+        private void UnitNameB_TextChanged(object sender, EventArgs e)
+        {
+            unitName = UnitNameB.Text;
+        }
+
+        ///////////New Unit//////////
+        private void button5_Click(object sender, EventArgs e)
+        {
+            UnitGet();
+
+            unit++;
+            File.WriteAllText("NumOfUnit.txt", unit.ToString());
+
+            Reset(button5);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            /////Save
+            /// Move Map
+            UnitGet();
+            for (int i = 0; i < 24; i++) 
+            {
+                for (int j = 0; j < 12; j++) 
+                {
+                    atofile[i] += a[i, j].ToString() + " ";
+                }
+            }
+            File.WriteAllLines("Unit" + unit.ToString() + ".txt", atofile);
+
+            /// Picture
+            UnitPiture.Image.Save("UnitImg" + unit.ToString() + ".png");
+
+            ///Name & description
+
+            string[] unitstring = new string[2];
+
+            unitstring[0] = unitName;
+            unitstring[1] = unitDes;
+            
+            File.WriteAllLines("UnitInfo" + unit.ToString() + ".txt", unitstring);
         }
         #endregion
     }

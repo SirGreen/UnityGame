@@ -243,11 +243,12 @@ namespace SideProject
             Reset(button5);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void SaveBut_Click(object sender, EventArgs e)
         {
             /////Save
             /// Move Map
             UnitGet();
+            for (int i = 0; i < 26; i++) atofile[i] = "";
             for (int i = 0; i < 24; i++) 
             {
                 for (int j = 0; j < 12; j++) 
@@ -263,6 +264,7 @@ namespace SideProject
             if (!Directory.Exists(unitName))
             {
                 Directory.CreateDirectory(unitName);
+                MessageBox.Show("Saved uwu");
             }
             else MessageBox.Show("This name has been used!");
 

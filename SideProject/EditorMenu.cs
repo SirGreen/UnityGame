@@ -23,7 +23,7 @@ namespace SideProject
         #region Var
         DateTime timespam;
         int[,] a = new int[24, 12];
-        string[] atofile = new string[24];
+        string[] atofile = new string[26];
         //ux - unit x cordinate
         int mode = 0, ux = -1, uy = -1;
         int unit=0;
@@ -220,6 +220,7 @@ namespace SideProject
         {
             mode = 1;
         }
+
         #endregion
 
         #region Advance Button 
@@ -229,15 +230,16 @@ namespace SideProject
         {
             unitName = UnitNameB.Text;
         }
+        //////////Unit Des//////////////
+        private void UnitDescrip_TextChanged(object sender, EventArgs e)
+        {
+            unitDes = UnitDescrip.Text;
+        }
 
         ///////////New Unit//////////
         private void button5_Click(object sender, EventArgs e)
         {
             UnitGet();
-
-            unit++;
-            File.WriteAllText("NumOfUnit.txt", unit.ToString());
-
             Reset(button5);
         }
 
@@ -253,19 +255,25 @@ namespace SideProject
                     atofile[i] += a[i, j].ToString() + " ";
                 }
             }
-            File.WriteAllLines("Unit" + unit.ToString() + ".txt", atofile);
+
+            atofile[24] = unitDes;
+
+            ////Tao folder
+
+            if (!Directory.Exists(unitName))
+            {
+                Directory.CreateDirectory(unitName);
+            }
+            else MessageBox.Show("This name has been used!");
+
+            File.WriteAllLines(unitName + "/info.txt", atofile);
 
             /// Picture
-            UnitPiture.Image.Save("UnitImg" + unit.ToString() + ".png");
+            UnitPiture.Image.Save(unitName + "/Img.png");
 
-            ///Name & description
+            unit++;
+            File.WriteAllText("NumOfUnit.txt", unit.ToString());
 
-            string[] unitstring = new string[2];
-
-            unitstring[0] = unitName;
-            unitstring[1] = unitDes;
-            
-            File.WriteAllLines("UnitInfo" + unit.ToString() + ".txt", unitstring);
         }
         #endregion
     }

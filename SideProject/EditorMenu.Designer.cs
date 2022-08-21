@@ -208,6 +208,7 @@
             this.UnitDescrip.PlaceholderText = "Say what this unit is";
             this.UnitDescrip.Size = new System.Drawing.Size(847, 179);
             this.UnitDescrip.TabIndex = 3;
+            this.UnitDescrip.TextChanged += new System.EventHandler(this.UnitDescrip_TextChanged);
             // 
             // label2
             // 

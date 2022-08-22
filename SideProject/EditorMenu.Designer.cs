@@ -47,9 +47,8 @@
             this.fPButton = new System.Windows.Forms.FlowLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.SaveBut = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.ChooseUnitB = new System.Windows.Forms.Button();
+            this.ResetBut = new System.Windows.Forms.Button();
             this.UPic.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UnitPiture)).BeginInit();
             this.MoveOp.SuspendLayout();
@@ -74,7 +73,7 @@
             this.UnitPiture.BackColor = System.Drawing.Color.LightCoral;
             this.UnitPiture.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.UnitPiture.Location = new System.Drawing.Point(4, 13);
-            this.UnitPiture.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.UnitPiture.Margin = new System.Windows.Forms.Padding(2);
             this.UnitPiture.Name = "UnitPiture";
             this.UnitPiture.Size = new System.Drawing.Size(150, 150);
             this.UnitPiture.TabIndex = 0;
@@ -101,7 +100,7 @@
             this.MoveOpfP.Controls.Add(this.b1);
             this.MoveOpfP.Controls.Add(this.button10);
             this.MoveOpfP.Location = new System.Drawing.Point(5, 19);
-            this.MoveOpfP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MoveOpfP.Margin = new System.Windows.Forms.Padding(2);
             this.MoveOpfP.Name = "MoveOpfP";
             this.MoveOpfP.Size = new System.Drawing.Size(372, 90);
             this.MoveOpfP.TabIndex = 0;
@@ -172,7 +171,7 @@
             // 
             this.MoveMapP.AutoSize = true;
             this.MoveMapP.Location = new System.Drawing.Point(5, 19);
-            this.MoveMapP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MoveMapP.Margin = new System.Windows.Forms.Padding(2);
             this.MoveMapP.Name = "MoveMapP";
             this.MoveMapP.Size = new System.Drawing.Size(325, 265);
             this.MoveMapP.TabIndex = 0;
@@ -193,10 +192,10 @@
             // UnitDescrip
             // 
             this.UnitDescrip.Location = new System.Drawing.Point(5, 60);
-            this.UnitDescrip.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.UnitDescrip.Margin = new System.Windows.Forms.Padding(2);
             this.UnitDescrip.Multiline = true;
             this.UnitDescrip.Name = "UnitDescrip";
-            this.UnitDescrip.PlaceholderText = "Say what this unit is";
+            this.UnitDescrip.PlaceholderText = "Say what this UnitNumber is";
             this.UnitDescrip.Size = new System.Drawing.Size(594, 109);
             this.UnitDescrip.TabIndex = 3;
             this.UnitDescrip.TextChanged += new System.EventHandler(this.UnitDescrip_TextChanged);
@@ -224,7 +223,7 @@
             // UnitNameB
             // 
             this.UnitNameB.Location = new System.Drawing.Point(76, 18);
-            this.UnitNameB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.UnitNameB.Margin = new System.Windows.Forms.Padding(2);
             this.UnitNameB.Name = "UnitNameB";
             this.UnitNameB.PlaceholderText = "Insert name";
             this.UnitNameB.Size = new System.Drawing.Size(523, 23);
@@ -235,9 +234,8 @@
             // 
             this.fPButton.Controls.Add(this.button1);
             this.fPButton.Controls.Add(this.SaveBut);
-            this.fPButton.Controls.Add(this.button3);
-            this.fPButton.Controls.Add(this.button4);
-            this.fPButton.Controls.Add(this.button5);
+            this.fPButton.Controls.Add(this.ChooseUnitB);
+            this.fPButton.Controls.Add(this.ResetBut);
             this.fPButton.Location = new System.Drawing.Point(1497, 825);
             this.fPButton.Name = "fPButton";
             this.fPButton.Size = new System.Drawing.Size(243, 61);
@@ -263,34 +261,25 @@
             this.SaveBut.UseVisualStyleBackColor = true;
             this.SaveBut.Click += new System.EventHandler(this.SaveBut_Click);
             // 
-            // button3
+            // ChooseUnitB
             // 
-            this.button3.Location = new System.Drawing.Point(165, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Reset";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.ChooseUnitB.Location = new System.Drawing.Point(3, 32);
+            this.ChooseUnitB.Name = "ChooseUnitB";
+            this.ChooseUnitB.Size = new System.Drawing.Size(123, 23);
+            this.ChooseUnitB.TabIndex = 3;
+            this.ChooseUnitB.Text = "Choose Unit";
+            this.ChooseUnitB.UseVisualStyleBackColor = true;
+            this.ChooseUnitB.Click += new System.EventHandler(this.ChooseUnitB_Click);
             // 
-            // button4
+            // ResetBut
             // 
-            this.button4.Location = new System.Drawing.Point(3, 32);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(123, 23);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Choose Unit";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(132, 32);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(108, 23);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "New Unit";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.ResetBut.Location = new System.Drawing.Point(132, 32);
+            this.ResetBut.Name = "ResetBut";
+            this.ResetBut.Size = new System.Drawing.Size(108, 23);
+            this.ResetBut.TabIndex = 4;
+            this.ResetBut.Text = "New Unit";
+            this.ResetBut.UseVisualStyleBackColor = true;
+            this.ResetBut.Click += new System.EventHandler(this.ResetBut_Click);
             // 
             // EditorMenu
             // 
@@ -334,8 +323,7 @@
         private FlowLayoutPanel fPButton;
         private Button button1;
         private Button SaveBut;
-        private Button button3;
-        private Button button4;
+        private Button ChooseUnitB;
         private PictureBox UnitPiture;
         private TextBox UnitDescrip;
         private Label label2;
@@ -346,7 +334,7 @@
         private Button b2;
         private Button b1;
         private Panel MoveMapP;
-        private Button button5;
+        private Button ResetBut;
         private FlowLayoutPanel MoveOpfP;
         private Button button10;
     }

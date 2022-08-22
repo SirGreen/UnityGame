@@ -22,14 +22,14 @@ namespace SideProject
 
         #region Var
         DateTime timespam;
-        int[,] a = new int[24, 12];
+        int[,] a = new int[12, 24];
         string[] atofile = new string[26];
-        //ux - unit x cordinate
+        //ux - UnitNumber x cordinate
         int mode = 0, ux = -1, uy = -1;
-        int unit=0;
+        public int UnitNumber=0;
         bool isPlaced = false;
         string unitName = "", unitDes = "";
-        Button[,] but = new Button[24,12];
+        Button[,] but = new Button[12,24];
         #endregion
 
         #region Elements
@@ -64,18 +64,18 @@ namespace SideProject
             e.Effect = DragDropEffects.Copy;
         }
 
-        private void UnitGet()
+        public void UnitGet()
         {
             string s = File.ReadAllText("NumOfUnit.txt");
 
-            unit = Convert.ToInt32(s);
+            UnitNumber = Convert.ToInt32(s);
         }
 
         private void ElementInit()
         {
-            for (int i = 0; i < 24; i++)
+            for (int i = 0; i < 12; i++)
             {
-                for (int j = 0; j < 12; j++)
+                for (int j = 0; j < 24; j++)
                 {
                     a[i, j] = 0;
                     Button btn = new()
@@ -83,11 +83,11 @@ namespace SideProject
                         Width = 50,
                         Height = 50,
                         BackColor = Color.White,
-                        Location = new Point(i * 50, j * 50),
+                        Location = new Point(j * 50, i * 50),
                         Name = i + " " + j
                     };
                     btn.Click += button_Click;
-                    but[i,j]= btn;
+                    but[i, j] = btn;
                     MoveMapP.Controls.Add(but[i,j]);
                 }
             }
@@ -96,6 +96,7 @@ namespace SideProject
         #endregion
 
         #region MenuButtons
+        //Exit button
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -115,9 +116,9 @@ namespace SideProject
 
             ElementInit();
 
-            for (int i = 0; i < 24; i++) 
+            for (int i = 0; i < 12; i++) 
             {
-                for (int j = 0; j < 12; j++) 
+                for (int j = 0; j < 24; j++) 
                 {
                     a[i, j] = 0;
                 }
@@ -126,11 +127,6 @@ namespace SideProject
 
             await Task.Delay(300);
             btn.Enabled = true;
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Reset(button3);
         }
         #endregion
 
@@ -220,7 +216,6 @@ namespace SideProject
         {
             mode = 1;
         }
-
         #endregion
 
         #region Advance Button 
@@ -230,6 +225,54 @@ namespace SideProject
         {
             unitName = UnitNameB.Text;
         }
+
+        //Choose unit
+        private void ChooseUnitB_Click(object sender, EventArgs e)
+        {
+            ChooseUnit choose = new ChooseUnit();
+            choose.ShowDialog();
+            if (choose.Loading)
+            {
+                ResetBut_Click(button1,null);
+                UnitPiture.Image = Image.FromFile(choose.LoadThis + "/Img.png");
+                UnitNameB.Text = choose.LoadThis;
+                string[] s = File.ReadAllLines(choose.LoadThis + "/info.txt");
+                UnitDescrip.Text = s[13];
+                for (int i = 0; i < 12; i++)
+                {
+                    int[] b = new int[24];
+                    int x = 0;
+                    string t = "";
+                    while (s[i].Length>0)
+                        if (s[i][0] !=' ')
+                    {
+                            t += s[i][0];
+                            s[i] = s[i].Remove(0, 1);
+                    } else
+                        {
+                            s[i] = s[i].Remove(0, 1);
+                            b[x] = int.Parse(t);
+                            t = "";
+                            x++;
+                        }
+                    for (int j = 0; j < 24; j++)
+                    {
+                        a[i,j] = b[j];
+                    }
+                }
+                for (int i = 0; i < 12; i++)
+                    for (int j = 0; j < 24; j++)
+                    {
+                        but[i, j].BackColor = c(a[i, j]);
+                        if (a[i, j] == 1)
+                        {
+                            but[i, j].Text = "R";
+                            ux = i; uy = j;
+                        }
+                    }
+            }
+        }
+
         //////////Unit Des//////////////
         private void UnitDescrip_TextChanged(object sender, EventArgs e)
         {
@@ -237,27 +280,33 @@ namespace SideProject
         }
 
         ///////////New Unit//////////
-        private void button5_Click(object sender, EventArgs e)
+        private void ResetBut_Click(object sender, EventArgs e)
         {
             UnitGet();
-            Reset(button5);
+            Reset(ResetBut);
         }
 
         private void SaveBut_Click(object sender, EventArgs e)
         {
             /////Save
+            if (unitName == "" || UnitPiture.Image == null || unitDes == "" || ux == -1) 
+            {
+                MessageBox.Show("Something's missing! >:(");
+                return;
+            }
+            
             /// Move Map
             UnitGet();
             for (int i = 0; i < 26; i++) atofile[i] = "";
-            for (int i = 0; i < 24; i++) 
+            for (int i = 0; i < 12; i++) 
             {
-                for (int j = 0; j < 12; j++) 
+                for (int j = 0; j < 24; j++) 
                 {
                     atofile[i] += a[i, j].ToString() + " ";
                 }
             }
 
-            atofile[24] = unitDes;
+            atofile[13] = unitDes;
 
             ////Tao folder
 
@@ -266,15 +315,19 @@ namespace SideProject
                 Directory.CreateDirectory(unitName);
                 MessageBox.Show("Saved uwu");
             }
-            else MessageBox.Show("This name has been used!");
+            else
+            {
+                MessageBox.Show("This name has been used!");
+                return;
+            }
 
             File.WriteAllLines(unitName + "/info.txt", atofile);
 
             /// Picture
             UnitPiture.Image.Save(unitName + "/Img.png");
 
-            unit++;
-            File.WriteAllText("NumOfUnit.txt", unit.ToString());
+            UnitNumber++;
+            File.WriteAllText("NumOfUnit.txt", UnitNumber.ToString());
 
         }
         #endregion

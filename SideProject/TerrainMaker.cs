@@ -90,6 +90,13 @@ namespace SideProject
             TerrainDes = textBox2.Text;
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = null;
+            textBox2.Text = null;
+            TerrainPicture.Image = null;
+        }
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             TerrainName = textBox1.Text;

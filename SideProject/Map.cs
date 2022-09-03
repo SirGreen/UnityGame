@@ -23,9 +23,9 @@ namespace SideProject
 
         void initMap()
         {
-            for(int i=0;i<30;i++)
+            for (int i = 0; i < 30; i++)
             {
-                for(int j=0;j<14;j++)
+                for (int j = 0; j < 14; j++)
                 {
                     Button btn = new Button()
                     {
@@ -37,22 +37,34 @@ namespace SideProject
                     MapP.Controls.Add(btn);
                 }
             }
+            button3.Text = "Delete Terrain";
+            isDelete = false;
         }
+
+        private Bitmap LoadBitMapUnlock(string s)
+        {
+            using (Bitmap bm = new Bitmap(s))
+            {
+                return new Bitmap(bm);
+            }
+        }
+
 
         private void LoadTerrain()
         {
+            fpOpt.Controls.Clear();
             if (!Directory.Exists("Terrain")) return;
             DirectoryInfo direct = new DirectoryInfo("Terrain");
 
-            Bitmap img;
+            string s;
 
-            foreach(DirectoryInfo dir in direct.GetDirectories())
+            foreach (DirectoryInfo dir in direct.GetDirectories())
             {
-                img = new Bitmap(dir + "/Img.png");
+                s = dir + "/Img.png";
                 Button btn = new Button()
                 {
                     Name = dir.Name,
-                    Image = img,
+                    Image = LoadBitMapUnlock(s),
                     Size = new Size(40, 40)
                 };
                 fpOpt.Controls.Add(btn);
@@ -62,11 +74,9 @@ namespace SideProject
 
         private void DeleteTerrain(string s)
         {
-            fpInfo.Controls.Clear();
-            fpOpt.Controls.Clear();
-            if (!Directory.Exists("Terrain/"+s)) return;
+            if (!Directory.Exists("Terrain/" + s)) return;
 
-            DirectoryInfo dir = new DirectoryInfo("Terrain/"+s);
+            DirectoryInfo dir = new DirectoryInfo("Terrain/" + s);
             if (dir.Exists) dir.Delete(true);
 
             LoadTerrain();
@@ -75,7 +85,7 @@ namespace SideProject
         private void Btn_Click(object? sender, EventArgs e)
         {
             Button btn = sender as Button;
-            if(!isDelete)
+            if (!isDelete)
             {
                 fpInfo.Controls.Clear();
                 PictureBox pb = new PictureBox()
@@ -84,7 +94,7 @@ namespace SideProject
                 };
                 Label lb = new Label()
                 {
-                    Text = btn.Name,
+                    Text = btn.Name + ": ",
                     AutoSize = true
                 };
 
@@ -107,22 +117,21 @@ namespace SideProject
                 btn.BackColor = Color.OrangeRed;
                 DialogResult result = MessageBox.Show("Are you sure to delete this terrain?", "Notification", MessageBoxButtons.YesNo);
 
-                switch(result)
+                switch (result)
                 {
                     case DialogResult.Yes:
                         {
-                            btn.Image = null;
-                            string s = btn.Name;
-                            fpOpt.Controls.Remove(btn);
-                            DeleteTerrain(s);
+                            fpOpt.Controls.Clear();
+                            DeleteTerrain(btn.Name);
                             break;
                         }
                     case DialogResult.No:
-                    {
-                        btn.BackColor = c;
-                        break;
-                    }
+                        {
+                            btn.BackColor = c;
+                            break;
+                        }
                 }
+
             }
         }
 
@@ -136,12 +145,12 @@ namespace SideProject
             Terraingb.Location = new Point(MapBox.Width + 25, 0);
             Terraingb.Height = MapBox.Height;
 
-            fpTerrain.Location = new Point(5,25);
-            fpTerrain.Width = Terraingb.Width-25;
+            fpTerrain.Location = new Point(5, 25);
+            fpTerrain.Width = Terraingb.Width - 25;
             fpTerrain.Height = Terraingb.Height - 40;
 
             TerrainOpt.Width = fpTerrain.Width;
-            TerrainOpt.Height = fpTerrain.Height/3*2-10;
+            TerrainOpt.Height = fpTerrain.Height / 3 * 2 - 10;
 
             fpOpt.Width = TerrainOpt.Width - 25;
             fpOpt.Height = TerrainOpt.Height - 40;
@@ -162,16 +171,19 @@ namespace SideProject
         {
             TerrainMaker ter = new TerrainMaker();
             this.Hide();
+
+            button3.Text = "Delete Terrain";
+            isDelete = false;
+
             ter.ShowDialog();
 
-            fpOpt.Controls.Clear();
             LoadTerrain();
             this.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if(button3.Text=="Delete Terrain")
+            if (button3.Text == "Delete Terrain")
             {
                 isDelete = true;
                 MessageBox.Show("Please choose the terrain that you want to delete!");
@@ -185,3 +197,4 @@ namespace SideProject
         }
     }
 }
+

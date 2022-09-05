@@ -20,6 +20,9 @@ namespace SideProject
         }
 
         static bool isDelete = false;
+        static int[,] mapgame = new int[30, 14];
+        Button[,] btnmap = new Button[30, 14];
+        PictureBox pbmap = new PictureBox();
 
         void initMap()
         {
@@ -27,6 +30,7 @@ namespace SideProject
             {
                 for (int j = 0; j < 14; j++)
                 {
+                    mapgame[i, j] = 0;
                     Button btn = new Button()
                     {
                         Width = 50,
@@ -34,6 +38,7 @@ namespace SideProject
                         Location = new Point(i * 50, j * 50),
                     };
 
+                    btnmap[i, j] = btn;
                     MapP.Controls.Add(btn);
                 }
             }
@@ -92,6 +97,7 @@ namespace SideProject
                 {
                     Image = btn.Image
                 };
+                pbmap = pb;
                 Label lb = new Label()
                 {
                     Text = btn.Name + ": ",
@@ -193,6 +199,17 @@ namespace SideProject
             {
                 isDelete = false;
                 button3.Text = "Delete Terrain";
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 30; i++) 
+            {
+                for (int j = 0; j < 14; j++)
+                {
+                    if (mapgame[i, j] == 0) btnmap[i, j].Image = pbmap.Image;
+                }
             }
         }
     }

@@ -34,13 +34,14 @@
             this.fPButtonMap = new System.Windows.Forms.FlowLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.Terraingb = new System.Windows.Forms.GroupBox();
             this.fpTerrain = new System.Windows.Forms.FlowLayoutPanel();
             this.TerrainOpt = new System.Windows.Forms.GroupBox();
             this.fpOpt = new System.Windows.Forms.FlowLayoutPanel();
             this.TerrainInfo = new System.Windows.Forms.GroupBox();
             this.fpInfo = new System.Windows.Forms.FlowLayoutPanel();
-            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.MapBox.SuspendLayout();
             this.fPButtonMap.SuspendLayout();
             this.Terraingb.SuspendLayout();
@@ -79,13 +80,13 @@
             // 
             // fPButtonMap
             // 
-            this.fPButtonMap.AutoSize = true;
             this.fPButtonMap.Controls.Add(this.button1);
             this.fPButtonMap.Controls.Add(this.button2);
             this.fPButtonMap.Controls.Add(this.button3);
-            this.fPButtonMap.Location = new System.Drawing.Point(465, 148);
+            this.fPButtonMap.Controls.Add(this.button4);
+            this.fPButtonMap.Location = new System.Drawing.Point(445, 91);
             this.fPButtonMap.Name = "fPButtonMap";
-            this.fPButtonMap.Size = new System.Drawing.Size(409, 41);
+            this.fPButtonMap.Size = new System.Drawing.Size(311, 86);
             this.fPButtonMap.TabIndex = 3;
             // 
             // button1
@@ -107,6 +108,16 @@
             this.button2.Text = "Terrain Maker";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(3, 44);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(152, 34);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "Delete Terrain";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Terraingb
             // 
@@ -162,15 +173,15 @@
             this.fpInfo.Size = new System.Drawing.Size(300, 150);
             this.fpInfo.TabIndex = 0;
             // 
-            // button3
+            // button4
             // 
-            this.button3.Location = new System.Drawing.Point(254, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(152, 34);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Delete Terrain";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button4.Location = new System.Drawing.Point(161, 44);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(112, 34);
+            this.button4.TabIndex = 3;
+            this.button4.Text = "Fill Terrain";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // Map
             // 
@@ -215,5 +226,6 @@
         private GroupBox TerrainInfo;
         private FlowLayoutPanel fpInfo;
         private Button button3;
+        private Button button4;
     }
 }

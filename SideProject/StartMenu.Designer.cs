@@ -46,7 +46,7 @@
             // 
             this.button2.AutoSize = true;
             this.button2.Location = new System.Drawing.Point(348, 187);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(78, 25);
             this.button2.TabIndex = 1;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace SideProject
 {
@@ -30,6 +31,7 @@ namespace SideProject
             Size = new Size(70, 40),
             Text = "Erase"
         };
+        int mode = 0;
 
         void initMap()
         {
@@ -43,7 +45,8 @@ namespace SideProject
                         Width = 50,
                         Height = 50,
                         Location = new Point(i * 50, j * 50),
-                        Name = i.ToString() + "_" + j.ToString()
+                        Name = i.ToString() + "_" + j.ToString(),
+                        BackgroundImageLayout = ImageLayout.Stretch,
                     };
 
                     btnmap[i, j] = btn;
@@ -69,13 +72,12 @@ namespace SideProject
         {
             isUnvisit[x,y] = false;
 
-            btnmap[x, y].Image = pbmap.Image;
+            btnmap[x, y].BackgroundImage = pbmap.Image;
 
             for (int i = 0; i < 4; i++)
             {
                 if (isValid(x, y, i) && mapgame[x + dx[i], y + dy[i]] == 0
-                    && isUnvisit[x + dx[i], y + dy[i]]) 
-                    
+                    && isUnvisit[x + dx[i], y + dy[i]])                     
                     Loan(x + dx[i], y + dy[i]);
             }
         }
@@ -86,7 +88,7 @@ namespace SideProject
 
             string s = btn.Name,s2="";
             int x = 0, y = 0;
-
+            mapgame[x, y] = mode;
             for (int i = 0; i < s.Length; i++) 
             {
                 if (s[i] == '_')
@@ -102,7 +104,7 @@ namespace SideProject
             if(isErase)
             {
                 isUnvisit[x, y] = true;
-                btn.Image=null;
+                btn.BackgroundImage=null;
             }
             else if(isFill)
             {
@@ -110,7 +112,7 @@ namespace SideProject
             }
             else if(pbmap.Image!=null)
             {
-                btn.Image = pbmap.Image;
+                btn.BackgroundImage = pbmap.Image;
                 isUnvisit[x, y] = false;
             }
         }
@@ -136,16 +138,19 @@ namespace SideProject
             if (!Directory.Exists("Terrain")) return;
             DirectoryInfo direct = new DirectoryInfo("Terrain");
 
-            string s;
+            string s,s1;
 
             foreach (DirectoryInfo dir in direct.GetDirectories())
             {
                 s = dir + "/Img.png";
+                s1 = dir + "/Des.text";
+                string[] s2 = File.ReadAllLines(s1);
                 Button btn = new Button()
                 {
-                    Name = dir.Name,
-                    Image = LoadBitMapUnlock(s),
-                    Size = new Size(40, 40)
+                    Name = s2[0],
+                    BackgroundImage = LoadBitMapUnlock(s),
+                    Size = new Size(50, 50),
+                    BackgroundImageLayout = ImageLayout.Stretch,
                 };
                 fpOpt.Controls.Add(btn);
                 btn.Click += Btn_Click;
@@ -171,13 +176,14 @@ namespace SideProject
         {
             Button btn = sender as Button;
             isErase = false;
-
+            mode = Int32.Parse(btn.Name);
             if (!isDelete)
             {
                 fpInfo.Controls.Clear();
                 PictureBox pb = new PictureBox()
                 {
-                    Image = btn.Image
+                    BackgroundImage = btn.BackgroundImage,
+                    BackgroundImageLayout = ImageLayout.Stretch,
                 };
                 pbmap = pb;
                 Label lb = new Label()

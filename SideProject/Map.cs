@@ -20,7 +20,7 @@ namespace SideProject
             LoadTerrain();
         }
 
-        static bool isDelete = false, isFill = false, isErase = false;
+        static bool isDelete = false, isFill = false;
         static int[,] mapgame = new int[30, 14];
         static bool[,] isUnvisit = new bool[30, 14];  
 
@@ -68,17 +68,18 @@ namespace SideProject
             return (x + dx[h] > -1 && x + dx[h] < 30 && y + dy[h] > -1 && y + dy[h] < 14);
         }
 
-        private void Loan(int x, int y)
+        private void Loan(int x, int y, int ch)
         {
+            mapgame[x,y]=mode;
             isUnvisit[x,y] = false;
 
             btnmap[x, y].BackgroundImage = pbmap.Image;
 
             for (int i = 0; i < 4; i++)
             {
-                if (isValid(x, y, i) && mapgame[x + dx[i], y + dy[i]] == 0
+                if (isValid(x, y, i) && mapgame[x + dx[i], y + dy[i]] == ch
                     && isUnvisit[x + dx[i], y + dy[i]])                     
-                    Loan(x + dx[i], y + dy[i]);
+                    Loan(x + dx[i], y + dy[i],ch);
             }
         }
 
@@ -88,7 +89,7 @@ namespace SideProject
 
             string s = btn.Name,s2="";
             int x = 0, y = 0;
-            mapgame[x, y] = mode;
+            
             for (int i = 0; i < s.Length; i++) 
             {
                 if (s[i] == '_')
@@ -101,19 +102,16 @@ namespace SideProject
 
             y = Convert.ToInt32(s2);
 
-            if(isErase)
+            if(isFill)
             {
-                isUnvisit[x, y] = true;
-                btn.BackgroundImage=null;
+                for (int i = 0; i < 30; i++)
+                    for (int j = 0; j < 14; j++) isUnvisit[i, j] = true;
+                Loan(x, y, mapgame[x,y]);
             }
-            else if(isFill)
-            {
-                Loan(x, y);
-            }
-            else if(pbmap.Image!=null)
+            else 
             {
                 btn.BackgroundImage = pbmap.Image;
-                isUnvisit[x, y] = false;
+                mapgame[x, y] = mode;
             }
         }
 
@@ -131,7 +129,6 @@ namespace SideProject
             fpOpt.Controls.Clear();
 
             ///Nothing btn
-            isErase = false;
             fpOpt.Controls.Add(btnerase);
             btnerase.Click += EraseButton_click;
 
@@ -143,11 +140,9 @@ namespace SideProject
             foreach (DirectoryInfo dir in direct.GetDirectories())
             {
                 s = dir + "/Img.png";
-                s1 = dir + "/Des.text";
-                string[] s2 = File.ReadAllLines(s1);
                 Button btn = new Button()
                 {
-                    Name = s2[0],
+                    Name = dir.Name,
                     BackgroundImage = LoadBitMapUnlock(s),
                     Size = new Size(50, 50),
                     BackgroundImageLayout = ImageLayout.Stretch,
@@ -159,7 +154,9 @@ namespace SideProject
 
         private void EraseButton_click(object? sender, EventArgs e)
         {
-            isErase = true;
+            mode = 0;
+            pbmap.Image = null;
+            fpInfo.Controls.Clear();
         }
 
         private void DeleteTerrain(string s)
@@ -175,15 +172,19 @@ namespace SideProject
         private void Btn_Click(object? sender, EventArgs e)
         {
             Button btn = sender as Button;
-            isErase = false;
-            mode = Int32.Parse(btn.Name);
+            
+            
             if (!isDelete)
             {
+                if (File.Exists("Terrain/"+btn.Name + "/Des.txt"))
+                {
+                    string[] s2 = File.ReadAllLines("Terrain/"+btn.Name + "/Des.txt");
+                    mode = Convert.ToInt32(s2[0]);
+                }
                 fpInfo.Controls.Clear();
                 PictureBox pb = new PictureBox()
                 {
-                    BackgroundImage = btn.BackgroundImage,
-                    BackgroundImageLayout = ImageLayout.Stretch,
+                    Image = btn.BackgroundImage,
                 };
                 pbmap = pb;
                 Label lb = new Label()

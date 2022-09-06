@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace SideProject
 {
@@ -19,7 +20,18 @@ namespace SideProject
             LoadTerrain();
         }
 
-        static bool isDelete = false;
+        static bool isDelete = false, isFill = false, isErase = false;
+        static int[,] mapgame = new int[30, 14];
+        static bool[,] isUnvisit = new bool[30, 14];  
+
+        Button[,] btnmap = new Button[30, 14];
+        PictureBox pbmap = new PictureBox();
+        Button btnerase = new Button()
+        {
+            Size = new Size(70, 40),
+            Text = "Erase"
+        };
+        int mode = 0;
 
         void initMap()
         {
@@ -27,18 +39,82 @@ namespace SideProject
             {
                 for (int j = 0; j < 14; j++)
                 {
+                    mapgame[i, j] = 0;
                     Button btn = new Button()
                     {
                         Width = 50,
                         Height = 50,
                         Location = new Point(i * 50, j * 50),
+                        Name = i.ToString() + "_" + j.ToString(),
+                        BackgroundImageLayout = ImageLayout.Stretch,
                     };
 
+                    btnmap[i, j] = btn;
+                    btn.Click += MapBtnClick;
                     MapP.Controls.Add(btn);
+
+                    isUnvisit[i, j] = true;
                 }
             }
             button3.Text = "Delete Terrain";
             isDelete = false;
+        }
+
+        static int[] dx = new int[4] { -1, 0, 1, 0 };
+        static int[] dy = new int[4] { 0, -1, 0, 1 };
+       
+        bool isValid(int x, int y, int h)
+        {
+            return (x + dx[h] > -1 && x + dx[h] < 30 && y + dy[h] > -1 && y + dy[h] < 14);
+        }
+
+        private void Loan(int x, int y)
+        {
+            isUnvisit[x,y] = false;
+
+            btnmap[x, y].BackgroundImage = pbmap.Image;
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (isValid(x, y, i) && mapgame[x + dx[i], y + dy[i]] == 0
+                    && isUnvisit[x + dx[i], y + dy[i]])                     
+                    Loan(x + dx[i], y + dy[i]);
+            }
+        }
+
+        private void MapBtnClick(object? sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+
+            string s = btn.Name,s2="";
+            int x = 0, y = 0;
+            mapgame[x, y] = mode;
+            for (int i = 0; i < s.Length; i++) 
+            {
+                if (s[i] == '_')
+                {
+                    x = Convert.ToInt32(s2);
+                    s2 = "";
+                }
+                else s2 += s[i];
+            }
+
+            y = Convert.ToInt32(s2);
+
+            if(isErase)
+            {
+                isUnvisit[x, y] = true;
+                btn.BackgroundImage=null;
+            }
+            else if(isFill)
+            {
+                Loan(x, y);
+            }
+            else if(pbmap.Image!=null)
+            {
+                btn.BackgroundImage = pbmap.Image;
+                isUnvisit[x, y] = false;
+            }
         }
 
         private Bitmap LoadBitMapUnlock(string s)
@@ -53,23 +129,37 @@ namespace SideProject
         private void LoadTerrain()
         {
             fpOpt.Controls.Clear();
+
+            ///Nothing btn
+            isErase = false;
+            fpOpt.Controls.Add(btnerase);
+            btnerase.Click += EraseButton_click;
+
             if (!Directory.Exists("Terrain")) return;
             DirectoryInfo direct = new DirectoryInfo("Terrain");
 
-            string s;
+            string s,s1;
 
             foreach (DirectoryInfo dir in direct.GetDirectories())
             {
                 s = dir + "/Img.png";
+                s1 = dir + "/Des.text";
+                string[] s2 = File.ReadAllLines(s1);
                 Button btn = new Button()
                 {
-                    Name = dir.Name,
-                    Image = LoadBitMapUnlock(s),
-                    Size = new Size(40, 40)
+                    Name = s2[0],
+                    BackgroundImage = LoadBitMapUnlock(s),
+                    Size = new Size(50, 50),
+                    BackgroundImageLayout = ImageLayout.Stretch,
                 };
                 fpOpt.Controls.Add(btn);
                 btn.Click += Btn_Click;
             }
+        }
+
+        private void EraseButton_click(object? sender, EventArgs e)
+        {
+            isErase = true;
         }
 
         private void DeleteTerrain(string s)
@@ -85,13 +175,17 @@ namespace SideProject
         private void Btn_Click(object? sender, EventArgs e)
         {
             Button btn = sender as Button;
+            isErase = false;
+            mode = Int32.Parse(btn.Name);
             if (!isDelete)
             {
                 fpInfo.Controls.Clear();
                 PictureBox pb = new PictureBox()
                 {
-                    Image = btn.Image
+                    BackgroundImage = btn.BackgroundImage,
+                    BackgroundImageLayout = ImageLayout.Stretch,
                 };
+                pbmap = pb;
                 Label lb = new Label()
                 {
                     Text = btn.Name + ": ",
@@ -163,6 +257,8 @@ namespace SideProject
             fpInfo.Height = TerrainInfo.Height - 40;
             fpInfo.Location = new Point(5, 25);
 
+            isFill = false;
+            isDelete = false;
 
             fPButtonMap.Location = new Point(MapBox.Width + 25, Terraingb.Height + 25);
         }
@@ -174,6 +270,9 @@ namespace SideProject
 
             button3.Text = "Delete Terrain";
             isDelete = false;
+
+            button4.Text = "Fill Terrain";
+            isFill = false;
 
             ter.ShowDialog();
 
@@ -193,6 +292,20 @@ namespace SideProject
             {
                 isDelete = false;
                 button3.Text = "Delete Terrain";
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if(button4.Text=="Fill Terrain")
+            {
+                isFill = true;
+                button4.Text = "Draw Terrain";
+            }
+            else
+            {
+                button4.Text = "Fill Terrain";
+                isFill = false;
             }
         }
     }

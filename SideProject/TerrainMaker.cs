@@ -82,7 +82,7 @@ namespace SideProject
 
             TerrainNum++;
             File.WriteAllText("NumOfTerrain.txt", TerrainNum.ToString());
-
+            MessageBox.Show("Unit saved! uwu");
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

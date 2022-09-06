@@ -14,7 +14,7 @@ namespace SideProject
     {
 
         static int TerrainNum = 0;
-        static string TerrainName = "", TerrainDes = "";
+        static string TerrainName = "", TerrainDes="";
 
         public TerrainMaker()
         {

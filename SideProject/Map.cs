@@ -20,11 +20,14 @@ namespace SideProject
             LoadTerrain();
         }
 
-        static bool isDelete = false, isFill = false;
-        static int[,] mapgame = new int[30, 14];
-        static bool[,] isUnvisit = new bool[30, 14];  
+        /// Var declaraton
 
-        Button[,] btnmap = new Button[30, 14];
+        static bool isDelete = false, isFill = false;
+        static int[,] mapgame = new int[18, 18];
+        static bool[,] isUnvisit = new bool[18, 18];
+        static string MapName="";
+
+        Button[,] btnmap = new Button[18, 18];
         PictureBox pbmap = new PictureBox();
         Button btnerase = new Button()
         {
@@ -35,9 +38,9 @@ namespace SideProject
 
         void initMap()
         {
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 18; i++)
             {
-                for (int j = 0; j < 14; j++)
+                for (int j = 0; j < 18; j++)
                 {
                     mapgame[i, j] = 0;
                     Button btn = new Button()
@@ -65,7 +68,7 @@ namespace SideProject
        
         bool isValid(int x, int y, int h)
         {
-            return (x + dx[h] > -1 && x + dx[h] < 30 && y + dy[h] > -1 && y + dy[h] < 14);
+            return (x + dx[h] > -1 && x + dx[h] < 18 && y + dy[h] > -1 && y + dy[h] < 18);
         }
 
         private void Loan(int x, int y, int ch)
@@ -104,8 +107,8 @@ namespace SideProject
 
             if(isFill)
             {
-                for (int i = 0; i < 30; i++)
-                    for (int j = 0; j < 14; j++) isUnvisit[i, j] = true;
+                for (int i = 0; i < 18; i++)
+                    for (int j = 0; j < 18; j++) isUnvisit[i, j] = true;
                 Loan(x, y, mapgame[x,y]);
             }
             else 
@@ -234,10 +237,7 @@ namespace SideProject
         {
             MapBox.Location = new Point(0, 0);
 
-            MapDBox.Location = new Point(0, MapBox.Height + 25);
-            MapDBox.Width = MapBox.Width;
-
-            Terraingb.Location = new Point(MapBox.Width + 25, 0);
+            Terraingb.Location = new Point( MapBox.Width + 25, 0);
             Terraingb.Height = MapBox.Height;
 
             fpTerrain.Location = new Point(5, 25);
@@ -258,10 +258,15 @@ namespace SideProject
             fpInfo.Height = TerrainInfo.Height - 40;
             fpInfo.Location = new Point(5, 25);
 
+
+            MapDBox.Location = new Point(Terraingb.Width + 25 + Terraingb.Location.X, 0);
+            MapDBox.Height = MapBox.Height - 500;
+            MapDBox.Width = MapBox.Width / 2;
+
             isFill = false;
             isDelete = false;
 
-            fPButtonMap.Location = new Point(MapBox.Width + 25, Terraingb.Height + 25);
+            fPButtonMap.Location = new Point(MapDBox.Location.X, MapDBox.Height + 25);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -294,6 +299,38 @@ namespace SideProject
                 isDelete = false;
                 button3.Text = "Delete Terrain";
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ////Save
+            if (MapName == "")
+            {
+                MessageBox.Show("Please enter Map Name");
+                return;
+            }
+
+            if (!Directory.Exists("Map")) Directory.CreateDirectory("Map");
+
+            if (!Directory.Exists("Map/" + MapName)) Directory.CreateDirectory("Map/" + MapName);
+            else
+            {
+                MessageBox.Show("This name has been used!");
+                return;
+            }
+
+            string[] maptofile = new string[18];
+            for (int i = 0; i < 18; i++)
+            {
+                for (int j = 0; j < 18; j++) maptofile[i] += mapgame[i, j].ToString() + " ";
+            }
+            File.WriteAllLines("Map/" + MapName + "/Info.txt", maptofile);
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            MapName = textBox1.Text;
         }
 
         private void button4_Click(object sender, EventArgs e)
